@@ -1,61 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import MovieList from "./components/MovieList";
+import MovieListHeading from "./components/MovieListHeading";
+import SearchBox from "./components/searchbox";
 
 const App = () => {
-  const [movies, setMovies] = useState([
-    {
-      Title: "Spirited Away",
-      Year: "2001",
-      imdbID: "tt0245429",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    },
-    {
-      Title: "My Neighbor Totoro",
-      Year: "1988",
-      imdbID: "tt0096283",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BYzJjMTYyMjQtZDI0My00ZjE2LTkyNGYtOTllNGQxNDMyZjE0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    },
-    {
-      Title: "Ponyo",
-      Year: "2008",
-      imdbID: "tt0876563",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BOTc3YmM3N2QtODZkMC00ZDE5LThjMTQtYTljN2Y1YTYwYWJkXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_SX300.jpg",
-    },
-    {
-      Title: "Howl's Moving Castle",
-      Year: "2004",
-      imdbID: "tt0347149",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BNmM4YTFmMmItMGE3Yy00MmRkLTlmZGEtMzZlOTQzYjk3MzA2XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    },
-    {
-      Title: "Princess Mononoke",
-      Year: "1997",
-      imdbID: "tt0119698",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BNTZkYmI0MmEtNGFlZC00OWZjLWFjMmItMjk1OWZkOWJiZGVjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    },
-    {
-      Title: "Kiki's Delivery Service",
-      Year: "1989",
-      imdbID: "tt0097814",
-      Type: "movie",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BYTQ1ZTM1ZTgtN2Q2Ny00YjFkLTliNjEtN2I1ZmY5ZTY1OTEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    },
-  ]);
+  const [movies, setMovies] = useState([]);
+  //
+  const [searchValue, setSearch] = useState("");
+
+  const getMovieRequest = async () => {
+    //url for api please see my slack message for api code
+    const url = "https://www.omdbapi.com/?s=die hard&apikey=6702906c";
+    //get api response as variable using fetch
+    const response = await fetch(url);
+    //convert response to json
+    const responseJson = await response.json();
+
+    console.log(responseJson);
+    setMovies(responseJson.Search);
+  };
+
+  //getmovie request when the page loads only
+  useEffect(() => {
+    getMovieRequest();
+  });
   return (
     <div className="container-fluid movie-app">
+      <div className="row d-flex align-items-center mt-4 mb-4">
+        <MovieListHeading heading="Movies" />
+        <SearchBox />
+      </div>
       <div className="row">
         <MovieList movies={movies} />
       </div>
