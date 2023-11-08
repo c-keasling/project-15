@@ -12,7 +12,7 @@ const App = () => {
 
   const getMovieRequest = async () => {
     //url for api please see my slack message for api code
-    const url = "https://www.omdbapi.com/?s=die hard&apikey=6702906c";
+    const url = "";
     //get api response as variable using fetch
     const response = await fetch(url);
     //convert response to json
