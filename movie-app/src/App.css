@@ -1,16 +1,42 @@
 body {
-	background: #000000e3;
-	color: hwb(0 100% 0%);
+	background: #141414;
+	color: #ffffff;
 }
 
 .movie-app > .row {
-	overflow-x: auto;
-	flex-wrap: nowrap;
-}
+	display: flex;
+	flex-wrap: nowrap; /*make sure its in one nice row */
+	gap: 20px; /* This adds space between your items */
+	overflow-x: auto; /* Enables scrolling if items overflow */
+	scroll-snap-type: x mandatory; 
+  }
+  
+  .scroll-button {
+	background: rgb(255, 255, 255);
+	border: none; /* Removes border */
+	color: blue;
+	font-size: medium;
+	padding: 10px; 
+	height: 75px;
+	width: 75px;
+	cursor: pointer; /* Changes cursor to pointer on hover */
+	border-radius: 50%; /* Makes the button circular */
+	position: fixed; /* Fixes the position relative to the viewport */
+	top: 61%; /* Centers the button vertically. had to play with it to get it in the right spot... thats what she said */
+	transform: translateY(-50%); /* Adjusts the positioning to truly center it by offsetting half its own height needed this for screen adjustment*/
+	z-index: 10; /* Ensures the button is above other elements */
+  }
+  
+  .scroll-button.left {
+	left: 25px; /* Positions the left button 25px from the left edge */
+  }
+  
+  .scroll-button.right {
+	right: 25px; /* Positions the right button 25px from the right edge */
+  }
 
 .image-container {
-	position: relative;
-	transition: transform 0.2s;
+	scroll-snap-align: start; /* Ensures that scrolling snaps the images align to the start of the container */
 }
 
 .image-container:hover {
