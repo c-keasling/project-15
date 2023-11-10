@@ -1,9 +1,9 @@
 import React from "react";
 
-const RemoveFavourites = () => {
+const RemoveFromWatchList = () => {
   return (
     <>
-      <span className="mr-2">Remove from favourites</span>
+      <span className="mr-2">Remove from Watch List</span>
       <svg
         width="1em"
         height="1em" // set height and width make this similiar to the addfavourites component
@@ -25,4 +25,4 @@ const RemoveFavourites = () => {
   );
 };
 
-export default RemoveFavourites;
+export default RemoveFromWatchList;

@@ -4,13 +4,13 @@ import "./App.css";
 import MovieList from "./components/MovieList";
 import MovieListHeading from "./components/MovieListHeading";
 import SearchBox from "./components/Searchbox";
-import AddFavourites from "./components/AddFavourites";
-import RemoveFavourites from "./components/RemoveFavourites";
+import AddToWatchlist from "./components/AddToWatchList";
+import RemoveFromWatchlist from "./components/RemoveFromWatchList";
 
 const App = () => {
-  // State hooks for movies, favourites, and search value
+  // State hooks for movies, WatchList, and search value
   const [movies, setMovies] = useState([]);
-  const [favourites, setFavourites] = useState([]);
+  const [watchlist, setWatchlist] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   //function to get movie objects from api
@@ -33,36 +33,36 @@ const App = () => {
     getMovieRequest(searchValue);
   }, [searchValue]);
 
-  // useEffect to load favourites from local storage on component mount
+  // useEffect to load WatchList from local storage on component mount
   useEffect(() => {
-    const movieFavourites = JSON.parse(
+    const movieWatchlist = JSON.parse(
       localStorage.getItem("react-movie-app-favourites")
     );
 
-    // If there are stored favourites then update the state
-    if (movieFavourites) {
-      setFavourites(movieFavourites);
+    // If there are stored WatchList then update the state
+    if (movieWatchlist) {
+      setWatchlist(movieWatchlist);
     }
   }, []);
-  // Function to save favourites to local storage
+  // Function to save WatchList to local storage
   const saveToLocalStorage = (items) => {
-    localStorage.setItem("react-movie-app-favourites", JSON.stringify(items));
+    localStorage.setItem("react-movie-app-watchlist", JSON.stringify(items));
   };
 
-  // Function to save favourites to local storage
-  const addFavouriteMovie = (movie) => {
-    const newFavouriteList = [...favourites, movie];
-    setFavourites(newFavouriteList);
-    saveToLocalStorage(newFavouriteList);
+  // Function to save WatchList to local storage
+  const addMovieToWatchlist = (movie) => {
+    const newWatchlist = [...watchlist, movie];
+    setWatchlist(newWatchlist);
+    saveToLocalStorage(newWatchlist);
   };
   //remove from list
-  const removeFavouriteMovie = (movie) => {
-    const newFavouriteList = favourites.filter(
-      (favourite) => favourite.imdbID !== movie.imdbID
+  const removeMovieFromWatchlist = (movie) => {
+    const newWatchlist = watchlist.filter(
+      (watchlistMovie) => watchlistMovie.imdbID !== movie.imdbID
     );
 
-    setFavourites(newFavouriteList);
-    saveToLocalStorage(newFavouriteList);
+    setWatchlist(newWatchlist);
+    saveToLocalStorage(newWatchlist);
   };
   // The layout of the app
   return (
@@ -74,18 +74,18 @@ const App = () => {
       <div className="row">
         <MovieList
           movies={movies}
-          handleFavouritesClick={addFavouriteMovie}
-          favouriteComponent={AddFavourites}
+          handleWatchlistClick={addMovieToWatchlist}
+          watchlistComponent={AddToWatchlist}
         />
       </div>
       <div className="row d-flex align-items-center mt-4 mb-4">
-        <MovieListHeading heading="Favourites" />
+        <MovieListHeading heading="Watchlist" />
       </div>
       <div className="row">
         <MovieList
-          movies={favourites}
-          handleFavouritesClick={removeFavouriteMovie}
-          favouriteComponent={RemoveFavourites}
+          movies={watchlist}
+          handleWatchlistClick={removeMovieFromWatchlist}
+          watchlistComponent={RemoveFromWatchlist}
         />
       </div>
     </div>
